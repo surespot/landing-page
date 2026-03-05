@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import './App.css'
 import googlePlayBadge from './assets/google-play-badge.png'
 import appStoreBadge from './assets/Download_on_the_App_Store_Badge.png'
-import logo from './assets/icon.png'
+import logo from './assets/logo.png'
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
