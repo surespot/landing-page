@@ -1,0 +1,88 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background-color: var(--color-bg-brown);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* Replace this path with your real hero background image */
+  background-image: url('./assets/bg.png');
+}
+
+.hero-inner {
+  position: relative;
+}
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.15em;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-text-dark); /* mobile: brown */
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms ease-out;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-link-mobile {
+  color: var(--color-text-dark);
+  align-self: flex-start;
+  display: inline-block;
+}
+
+@media (min-width: 768px) {
+  .nav-link::after {
+    background-color: var(--color-text-light); /* desktop: white */
+  }
+}
+
+.about-media-outer {
+  position: relative;
+  width: 100%;
+  padding-top: 60%;
+  border-radius: 3rem;
+  overflow: hidden;
+}
+
+.about-media {
+  position: absolute;
+  inset: 0;
+  background-image: url('./assets/fried\ rice.webp');
+  background-size: cover;
+  background-position: center;
+  clip-path: polygon(96% 3%, 96% 95%, 96% 81%, 68% 81%, 68% 95%, 5% 95%, 4% 16%, 31% 16%, 31% 3%, 64% 3%);
+}
+
+.menu-carousel {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.menu-carousel::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Fade-in-up animation for landing sections */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

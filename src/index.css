@@ -1,0 +1,76 @@
+@import 'tailwindcss';
+@config '../tailwind.config.js';
+
+@font-face {
+  font-family: 'Cerebri Sans Pro';
+  src: url('./assets/Cerebri-Sans-Pro/CerebriSansPro-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cerebri Sans Pro';
+  src: url('./assets/Cerebri-Sans-Pro/CerebriSansPro-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cerebri Sans Pro';
+  src: url('./assets/Cerebri-Sans-Pro/CerebriSansPro-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cerebri Sans Pro';
+  src: url('./assets/Cerebri-Sans-Pro/CerebriSansPro-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  font-family: 'Cerebri Sans Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Brand golds */
+  --color-gold-active: #ffd700;
+  --color-gold-passive: #e6bf00;
+
+  /* Text */
+  --color-text-dark: #2c2c2c;
+  --color-text-light: #ffffff;
+
+  /* Arrow states */
+  --color-arrow-gold-passive: #ffe88a;
+  --color-arrow-gold-active: #ffdd55;
+  --color-arrow-grey-passive: #757575;
+  --color-arrow-grey-active: #2c2c2c;
+
+  /* Backgrounds */
+  --color-bg-cream: #fffdf7;
+  --color-bg-brown: #3e2723;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 20rem;
+  min-height: 100vh;
+  background-color: var(--color-bg-cream);
+}
+
+#root {
+  min-height: 100vh;
+}
