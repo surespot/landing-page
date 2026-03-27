@@ -22,6 +22,25 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"Surespot","description":"Surespot food delivery in Lagos. Your favorite meals, fast and sure. Delivery and pickup 9AM–10PM.","url":"https://surespot.ng","address":{"@type":"PostalAddress","streetAddress":"1, Iba Junction Bus Stop, Lasu Isheri Road","addressLocality":"Iba, Ojo","addressRegion":"Lagos State"},"telephone":"+2348163395600","email":"admin@surespot.ng","openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"09:00","closes":"22:00"},"areaServed":{"@type":"Place","name":"Lagos, Nigeria"}}</script>
   </head>
   <body>
+    <svg
+      aria-hidden="true"
+      width="0"
+      height="0"
+      style="position:absolute; left:-9999px; pointer-events:none; overflow:hidden;"
+    >
+      <defs>
+        <filter id="round">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+          <feColorMatrix
+            in="blur"
+            mode="matrix"
+            values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 19 -9"
+            result="goo"
+          />
+          <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+        </filter>
+      </defs>
+    </svg>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

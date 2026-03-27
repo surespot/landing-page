@@ -5,6 +5,20 @@ import googlePlayBadge from './assets/google-play-badge.png'
 import appStoreBadge from './assets/Download_on_the_App_Store_Badge.png'
 import logo from './assets/logo.png'
 
+type MenuItem = {
+  name: string
+  price: string
+  rating: string
+  time: string
+}
+
+const BASE_MENU_ITEMS: MenuItem[] = [
+  { name: 'Jollof Rice', price: '₦1,500', rating: '4.8', time: '20–25 mins' },
+  { name: 'Amala', price: '₦1,500', rating: '4.7', time: '20–25 mins' },
+  { name: 'Spaghetti', price: '₦1,800', rating: '4.8', time: '25–30 mins' },
+  { name: 'Bread and Beans', price: '₦800', rating: '4.6', time: '15–25 mins' },
+]
+
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const carouselRef = useRef<HTMLDivElement | null>(null)
@@ -13,16 +27,16 @@ function App() {
   const menuRef = useRef<HTMLDivElement | null>(null)
   const footerRef = useRef<HTMLDivElement | null>(null)
 
-  const baseMenuItems = [
-    { name: 'Jollof Rice', price: '₦1,500', rating: '4.8', time: '20–25 mins' },
-    { name: 'Amala', price: '₦1,500', rating: '4.7', time: '20–25 mins' },
-    { name: 'Spaghetti', price: '₦1,800', rating: '4.8', time: '25–30 mins' },
-    { name: 'Bread and Beans', price: '₦800', rating: '4.6', time: '15–25 mins' },
-  ] as const
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([
+    ...BASE_MENU_ITEMS,
+    ...BASE_MENU_ITEMS,
+  ])
+  const [isLoadingMenu, setIsLoadingMenu] = useState(true)
+  const [usingFallbackMenu, setUsingFallbackMenu] = useState(false)
+  const [noRemoteMenuItems, setNoRemoteMenuItems] = useState(false)
 
-  const menuItems = [...baseMenuItems, ...baseMenuItems]
   const pageSize = 4
-  const pageCount = Math.ceil(menuItems.length / pageSize)
+  const pageCount = Math.max(1, Math.ceil(menuItems.length / pageSize))
   const [page, setPage] = useState(0)
 
   useEffect(() => {
@@ -58,6 +72,97 @@ function App() {
       if (el) observer.observe(el)
     })
     return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const apiBase = import.meta.env.VITE_API_BASE_URL as string | undefined
+
+    if (!apiBase) {
+      setMenuItems([...BASE_MENU_ITEMS, ...BASE_MENU_ITEMS])
+      setUsingFallbackMenu(true)
+      setNoRemoteMenuItems(false)
+      setIsLoadingMenu(false)
+      return
+    }
+
+    let cancelled = false
+
+    const loadPopular = async () => {
+      try {
+        const url = new URL('/food-items/popular', apiBase)
+        url.searchParams.set('page', '1')
+        url.searchParams.set('limit', '8')
+
+        const res = await fetch(url.toString())
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+
+        const json = await res.json()
+        const items = json?.data?.items ?? []
+
+        if (!Array.isArray(items) || items.length === 0) {
+          if (cancelled) return
+          setMenuItems([])
+          setNoRemoteMenuItems(true)
+          setUsingFallbackMenu(false)
+          return
+        }
+
+        const mapped: MenuItem[] = items.map((item: any) => {
+          const rawPrice = typeof item.price === 'number' ? item.price : undefined
+          const currency = typeof item.currency === 'string' ? item.currency : 'NGN'
+
+          const formattedPrice =
+            typeof item.formattedPrice === 'string'
+              ? item.formattedPrice
+              : rawPrice != null
+              ? new Intl.NumberFormat('en-NG', {
+                  style: 'currency',
+                  currency,
+                  minimumFractionDigits: 0,
+                }).format(rawPrice / 100)
+              : '—'
+
+          const avgRating =
+            typeof item.averageRating === 'number' && !Number.isNaN(item.averageRating)
+              ? item.averageRating
+              : undefined
+
+          const eta =
+            typeof item.eta === 'string'
+              ? item.eta
+              : item.estimatedTime &&
+                  typeof item.estimatedTime.min === 'number' &&
+                  typeof item.estimatedTime.max === 'number'
+                ? `${item.estimatedTime.min}-${item.estimatedTime.max} mins`
+                : '20–25 mins'
+
+          return {
+            name: item.name ?? 'Meal',
+            price: formattedPrice,
+            rating: avgRating != null ? avgRating.toFixed(1) : '4.8',
+            time: eta,
+          }
+        })
+
+        if (cancelled) return
+        setMenuItems(mapped)
+        setNoRemoteMenuItems(false)
+        setUsingFallbackMenu(false)
+      } catch {
+        if (cancelled) return
+        setMenuItems([...BASE_MENU_ITEMS, ...BASE_MENU_ITEMS])
+        setUsingFallbackMenu(true)
+        setNoRemoteMenuItems(false)
+      } finally {
+        if (!cancelled) setIsLoadingMenu(false)
+      }
+    }
+
+    loadPopular()
+
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   return (
@@ -248,36 +353,45 @@ function App() {
             </p>
           </div>
 
-          <div
-            ref={carouselRef}
-            className="menu-carousel flex gap-6 overflow-x-auto pb-4 pl-5 pr-3 sm:pl-8 sm:pr-4 snap-x snap-mandatory scroll-smooth xl:overflow-hidden"
-          >
-            {menuItems.map((item, index) => (
-              <article
-                key={`${item.name}-${index}`}
-                className="flex w-64 shrink-0 snap-start flex-col overflow-hidden rounded-3xl bg-white shadow-[0_12px_24px_rgba(0,0,0,0.12)] sm:w-56 xl:w-56"
-              >
-                <div className="relative h-36 bg-cover bg-center" style={{ backgroundImage: "url('./assets/bg.png')" }}>
-                  <div className="absolute bottom-3 left-3 inline-flex items-center gap-1 rounded-full bg-surface-cream/95 px-2 py-1 text-xs font-semibold text-text-dark shadow-sm">
-                    <span>{item.rating}</span>
-                    <span>★</span>
+          {noRemoteMenuItems ? (
+            <div className="px-5 text-center text-sm text-text-dark/70 sm:px-0">
+              No items to show right now. Please check back later.
+            </div>
+          ) : (
+            <div
+              ref={carouselRef}
+              className="menu-carousel flex gap-6 overflow-x-auto pb-4 pl-5 pr-3 sm:pl-8 sm:pr-4 snap-x snap-mandatory scroll-smooth xl:overflow-hidden"
+            >
+              {menuItems.map((item, index) => (
+                <article
+                  key={`${item.name}-${index}`}
+                  className="flex w-64 shrink-0 snap-start flex-col overflow-hidden rounded-3xl bg-white shadow-[0_12px_24px_rgba(0,0,0,0.12)] sm:w-56 xl:w-56"
+                >
+                  <div
+                    className="relative h-36 bg-cover bg-center"
+                    style={{ backgroundImage: "url('./assets/bg.png')" }}
+                  >
+                    <div className="absolute bottom-3 left-3 inline-flex items-center gap-1 rounded-full bg-surface-cream/95 px-2 py-1 text-xs font-semibold text-text-dark shadow-sm">
+                      <span>{item.rating}</span>
+                      <span>★</span>
+                    </div>
                   </div>
-                </div>
-                <div className="flex flex-1 flex-col gap-3 p-4">
-                  <div className="flex items-start justify-between gap-2">
-                    <h3 className="text-sm font-semibold sm:text-base">{item.name}</h3>
-                    <p className="text-sm font-semibold text-gold-active">{item.price}</p>
+                  <div className="flex flex-1 flex-col gap-3 p-4">
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="text-sm font-semibold sm:text-base">{item.name}</h3>
+                      <p className="text-sm font-semibold text-gold-active">{item.price}</p>
+                    </div>
+                    <p className="text-xs text-text-dark/70">
+                      Delicious meal prepared fresh and delivered hot, just the way you like it.
+                    </p>
+                    <div className="mt-auto pt-2 text-xs text-text-dark/60">
+                      <span>⏱ {item.time}</span>
+                    </div>
                   </div>
-                  <p className="text-xs text-text-dark/70">
-                    Delicious meal prepared fresh and delivered hot, just the way you like it.
-                  </p>
-                  <div className="mt-auto pt-2 text-xs text-text-dark/60">
-                    <span>⏱ {item.time}</span>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
+                </article>
+              ))}
+            </div>
+          )}
 
           <div className="mt-6 hidden items-center justify-center gap-4 lg:flex">
             <button

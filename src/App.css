@@ -50,18 +50,22 @@
 .about-media-outer {
   position: relative;
   width: 100%;
-  padding-top: 60%;
-  border-radius: 3rem;
+  aspect-ratio: 5 / 3;
+  border-radius: 2rem;
   overflow: hidden;
+  background: linear-gradient(135deg, #ffd700 0%, #f1c232 45%, #b8860b 100%);
 }
 
 .about-media {
   position: absolute;
-  inset: 0;
+  inset: 5px;
+  border-radius: calc(2rem - 5px);
   background-image: url('./assets/fried\ rice.webp');
   background-size: cover;
   background-position: center;
-  clip-path: polygon(96% 3%, 96% 95%, 96% 81%, 68% 81%, 68% 95%, 5% 95%, 4% 16%, 31% 16%, 31% 3%, 64% 3%);
+  /* clip-path: polygon(96% 3%, 96% 95%, 96% 81%, 68% 81%, 68% 95%, 5% 95%, 4% 16%, 31% 16%, 31% 3%, 64% 3%); */
+  filter: url('#round');
+  -webkit-filter: url('#round');
 }
 
 .menu-carousel {
