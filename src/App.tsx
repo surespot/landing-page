@@ -1,4 +1,3 @@
-/* eslint-disable-entire-file @typescript-eslint/no-unused-vars */
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './App.css'
@@ -20,6 +19,18 @@ const BASE_MENU_ITEMS: MenuItem[] = [
   { name: 'Bread and Beans', price: '₦800', rating: '4.6', time: '15–25 mins' },
 ]
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL as string | undefined
+
+type FoodItemApi = {
+  name?: string
+  price?: number
+  formattedPrice?: string
+  currency?: string
+  averageRating?: number
+  eta?: string
+  estimatedTime?: { min?: number; max?: number }
+}
+
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const carouselRef = useRef<HTMLDivElement | null>(null)
@@ -28,13 +39,12 @@ function App() {
   const menuRef = useRef<HTMLDivElement | null>(null)
   const footerRef = useRef<HTMLDivElement | null>(null)
 
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([
-    ...BASE_MENU_ITEMS,
-    ...BASE_MENU_ITEMS,
-  ])
+  const [menuItems, setMenuItems] = useState<MenuItem[]>(() =>
+    API_BASE ? [] : [...BASE_MENU_ITEMS, ...BASE_MENU_ITEMS]
+  )
 
-  const [isLoadingMenu, setIsLoadingMenu] = useState(true)
-  const [usingFallbackMenu, setUsingFallbackMenu] = useState(false)
+  const [isLoadingMenu, setIsLoadingMenu] = useState(() => Boolean(API_BASE))
+  const [usingFallbackMenu, setUsingFallbackMenu] = useState(() => !API_BASE)
   const [noRemoteMenuItems, setNoRemoteMenuItems] = useState(false)
 
   const pageSize = 4
@@ -77,7 +87,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const apiBase = import.meta.env.VITE_API_BASE_URL as string | undefined
+    const apiBase = API_BASE
 
     if (!apiBase) {
       setMenuItems([...BASE_MENU_ITEMS, ...BASE_MENU_ITEMS])
@@ -109,7 +119,7 @@ function App() {
           return
         }
 
-        const mapped: MenuItem[] = items.map((item: any) => {
+        const mapped: MenuItem[] = (items as FoodItemApi[]).map((item) => {
           const rawPrice = typeof item.price === 'number' ? item.price : undefined
           const currency = typeof item.currency === 'string' ? item.currency : 'NGN'
 
@@ -353,11 +363,40 @@ function App() {
             <p className="mx-auto max-w-2xl text-sm text-text-dark/80 sm:text-base">
               Discover some of our popular dishes that our customers cannot get enough of.
             </p>
+            {usingFallbackMenu && !isLoadingMenu && !noRemoteMenuItems ? (
+              <p className="text-xs text-text-dark/60" role="status">
+                Showing sample dishes — live menu unavailable.
+              </p>
+            ) : null}
           </div>
 
           {noRemoteMenuItems ? (
             <div className="px-5 text-center text-sm text-text-dark/70 sm:px-0">
               No items to show right now. Please check back later.
+            </div>
+          ) : isLoadingMenu ? (
+            <div
+              className="flex gap-6 overflow-x-auto pb-4 pl-5 pr-3 sm:pl-8 sm:pr-4"
+              aria-busy="true"
+              aria-label="Loading popular menu"
+            >
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div
+                  key={`menu-skeleton-${i}`}
+                  className="flex w-64 shrink-0 flex-col overflow-hidden rounded-3xl bg-white shadow-[0_12px_24px_rgba(0,0,0,0.12)] sm:w-56 xl:w-56"
+                >
+                  <div className="h-36 animate-pulse bg-text-dark/10" />
+                  <div className="flex flex-1 flex-col gap-3 p-4">
+                    <div className="flex justify-between gap-2">
+                      <div className="h-4 w-24 animate-pulse rounded bg-text-dark/10" />
+                      <div className="h-4 w-14 animate-pulse rounded bg-text-dark/10" />
+                    </div>
+                    <div className="h-3 w-full animate-pulse rounded bg-text-dark/10" />
+                    <div className="h-3 w-2/3 animate-pulse rounded bg-text-dark/10" />
+                    <div className="mt-auto h-3 w-20 animate-pulse rounded bg-text-dark/10 pt-2" />
+                  </div>
+                </div>
+              ))}
             </div>
           ) : (
             <div
@@ -400,7 +439,7 @@ function App() {
               type="button"
               aria-label="Previous menu items"
               className="flex h-10 w-10 items-center justify-center rounded-full bg-arrow-gold-passive text-text-dark disabled:opacity-40"
-              disabled={page === 0}
+              disabled={isLoadingMenu || noRemoteMenuItems || page === 0}
               onClick={() => setPage((p) => Math.max(0, p - 1))}
             >
               ‹
@@ -409,7 +448,7 @@ function App() {
               type="button"
               aria-label="Next menu items"
               className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-active text-text-dark disabled:opacity-40"
-              disabled={page >= pageCount - 1}
+              disabled={isLoadingMenu || noRemoteMenuItems || page >= pageCount - 1}
               onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
             >
               ›
