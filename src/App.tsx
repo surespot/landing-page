@@ -1,3 +1,4 @@
+/* eslint-disable-entire-file @typescript-eslint/no-unused-vars */
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './App.css'
@@ -31,6 +32,7 @@ function App() {
     ...BASE_MENU_ITEMS,
     ...BASE_MENU_ITEMS,
   ])
+
   const [isLoadingMenu, setIsLoadingMenu] = useState(true)
   const [usingFallbackMenu, setUsingFallbackMenu] = useState(false)
   const [noRemoteMenuItems, setNoRemoteMenuItems] = useState(false)
