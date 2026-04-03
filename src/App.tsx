@@ -10,7 +10,11 @@ type MenuItem = {
   price: string
   rating: string
   time: string
+  /** Remote image from API; omitted for hardcoded fallback items */
+  imageUrl?: string
 }
+
+const MENU_CARD_FALLBACK_BG = "url('./assets/bg.png')"
 
 const BASE_MENU_ITEMS: MenuItem[] = [
   { name: 'Jollof Rice', price: '₦1,500', rating: '4.8', time: '20–25 mins' },
@@ -29,6 +33,8 @@ type FoodItemApi = {
   averageRating?: number
   eta?: string
   estimatedTime?: { min?: number; max?: number }
+  imageUrl?: string
+  imageUrls?: string[]
 }
 
 function App() {
@@ -148,11 +154,19 @@ function App() {
                 ? `${item.estimatedTime.min}-${item.estimatedTime.max} mins`
                 : '20–25 mins'
 
+          const imageUrl =
+            typeof item.imageUrl === 'string' && item.imageUrl.trim() !== ''
+              ? item.imageUrl.trim()
+              : Array.isArray(item.imageUrls) && item.imageUrls.length > 0
+                ? item.imageUrls.find((u) => typeof u === 'string' && u.trim() !== '')?.trim()
+                : undefined
+
           return {
             name: item.name ?? 'Meal',
             price: formattedPrice,
             rating: avgRating != null ? avgRating.toFixed(1) : '4.8',
             time: eta,
+            ...(imageUrl ? { imageUrl } : {}),
           }
         })
 
@@ -410,7 +424,11 @@ function App() {
                 >
                   <div
                     className="relative h-36 bg-cover bg-center"
-                    style={{ backgroundImage: "url('./assets/bg.png')" }}
+                    style={{
+                      backgroundImage: item.imageUrl
+                        ? `url(${JSON.stringify(item.imageUrl)})`
+                        : MENU_CARD_FALLBACK_BG,
+                    }}
                   >
                     <div className="absolute bottom-3 left-3 inline-flex items-center gap-1 rounded-full bg-surface-cream/95 px-2 py-1 text-xs font-semibold text-text-dark shadow-sm">
                       <span>{item.rating}</span>
