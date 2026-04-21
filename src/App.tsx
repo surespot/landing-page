@@ -512,6 +512,9 @@ function App() {
                   <Link to="/terms" className="block text-left hover:text-text-light">
                     Terms of Service
                   </Link>
+                  <Link to="/support" className="block text-left hover:text-text-light">
+                    Support
+                  </Link>
                 </div>
               </div>
             </div>

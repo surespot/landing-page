@@ -15,6 +15,11 @@ const ROUTE_META: Record<string, { title: string; description: string }> = {
     title: 'Privacy Policy | Surespot',
     description: 'Surespot Privacy Policy (Customers). How we collect, use, and protect your information.',
   },
+  '/support': {
+    title: 'Support | Surespot',
+    description:
+      'Contact Surespot support by email or phone, get help in the app, and learn how to report order issues.',
+  },
 }
 
 export default function DocHead() {
