@@ -11,6 +11,7 @@ const TOC_ITEMS = [
   { id: 'payment-processing', label: 'Payment Processing' },
   { id: 'delivery-and-pickup', label: 'Delivery and Pickup' },
   { id: 'cancellations-and-refunds', label: 'Cancellations and Refunds' },
+  { id: 'dispute-resolution', label: 'Dispute Resolution' },
   { id: 'promotions', label: 'Promotions' },
   { id: 'user-content', label: 'User Content' },
   { id: 'prohibited-conduct', label: 'Prohibited Conduct' },
@@ -85,7 +86,7 @@ export default function TermsOfService() {
               <img src={logo} alt="Surespot" className="h-16 w-auto sm:h-20" />
             </Link>
             <h1 className="mt-6 mb-2 text-3xl font-bold text-text-dark">Terms of Service</h1>
-            <p className="mb-0 text-sm text-text-dark/70">Last Updated: March 4, 2026</p>
+            <p className="mb-0 text-sm text-text-dark/70">Last Updated: April 21, 2026</p>
           </div>
 
           <div className="space-y-10">
@@ -135,9 +136,7 @@ export default function TermsOfService() {
             >
               <h2 className="mb-3 text-xl font-semibold">4. The Services</h2>
               <p className="leading-relaxed">
-                The app and website let you order food from Surespot's branches
-                and arrange delivery or pickup via our delivery riders. Availability, menus, pricing, and delivery estimates can
-                change.
+                Surespot is a restaurant that prepares and sells food directly from its own kitchen and branches. We are not a marketplace — all food is made by Surespot. The app and website let you place orders and arrange delivery or pickup via our own delivery riders. Availability, menus, pricing, and delivery estimates may change.
               </p>
             </section>
 
@@ -176,11 +175,10 @@ export default function TermsOfService() {
             >
               <h2 className="mb-3 text-xl font-semibold">7. Delivery and Pickup</h2>
               <p className="leading-relaxed">
-                Delivery times are estimates. You are responsible for providing accurate
-                delivery details and being available to receive your order. For door‑delivery
-                orders, a delivery confirmation code may be required to complete the delivery.
-                If you choose pickup, you are responsible for arriving at the correct location
-                and time.
+                Delivery times are estimates. You are responsible for providing accurate delivery details and being available to receive your order. For door‑delivery orders, a delivery confirmation code may be required to complete the delivery. If you choose pickup, you are responsible for arriving at the correct location and time.
+              </p>
+              <p className="mt-2 leading-relaxed">
+                Surespot is responsible for ensuring your order is prepared correctly and dispatched to your address. We are not liable for delivery issues caused by inaccurate or incomplete addresses you provide, your unavailability at the time of delivery, or circumstances beyond our reasonable control. If your order arrives incorrect, damaged, or is not delivered, contact us immediately through the app.
               </p>
             </section>
 
@@ -190,11 +188,43 @@ export default function TermsOfService() {
               className="scroll-mt-24"
             >
               <h2 className="mb-3 text-xl font-semibold">8. Cancellations and Refunds</h2>
+              <h3 className="mb-2 mt-4 text-lg font-medium">Cancellations</h3>
               <p className="leading-relaxed">
-                Cancellation and refund eligibility depends on order status, kitchen
-                preparation, and delivery progress. We may limit or deny refunds for late
-                cancellations, repeated issues, or suspected abuse. Refunds, when approved,
-                may take time to appear depending on the payment provider.
+                You may cancel an order before kitchen preparation begins. Once preparation has started, cancellation may no longer be possible. If Surespot cancels your order for any reason — such as item unavailability or an operational issue — you will be notified promptly.
+              </p>
+              <h3 className="mb-2 mt-4 text-lg font-medium">Refunds</h3>
+              <p className="mb-2 leading-relaxed">You may be eligible for a refund if:</p>
+              <ul className="list-inside list-disc space-y-1 leading-relaxed">
+                <li>Surespot cancelled your order.</li>
+                <li>You received the wrong items.</li>
+                <li>Your order was significantly different from what was described.</li>
+                <li>Your order was not delivered.</li>
+              </ul>
+              <p className="mt-3 leading-relaxed">
+                If a refund is approved, a member of our team will contact you to collect your bank or payment details. Refunds are typically processed within 3–5 business days, subject to your bank's processing times.
+              </p>
+              <p className="mt-2 leading-relaxed">
+                We may decline refund requests for cancellations made after preparation begins, minor variations in presentation or portion, or where abuse of the refund process is suspected.
+              </p>
+            </section>
+
+            <section
+              id="dispute-resolution"
+              ref={(el) => { sectionRefs.current['dispute-resolution'] = el }}
+              className="scroll-mt-24"
+            >
+              <h2 className="mb-3 text-xl font-semibold">9. Dispute Resolution</h2>
+              <p className="mb-2 leading-relaxed">
+                If you have an issue with an order, you can raise a dispute directly in the app:
+              </p>
+              <ol className="list-inside list-decimal space-y-1 leading-relaxed">
+                <li>Go to <strong>Profile → Contact Support → Order Disputes</strong>.</li>
+                <li>Select the affected order and describe the issue.</li>
+                <li>Attach any supporting images if applicable.</li>
+              </ol>
+              <p className="mt-3 leading-relaxed">
+                Our support team will review your dispute and respond as soon as possible. For unresolved issues, contact us directly at{' '}
+                <a href="mailto:admin@surespot.ng" className="text-gold-active underline hover:no-underline">admin@surespot.ng</a>.
               </p>
             </section>
 
@@ -203,7 +233,7 @@ export default function TermsOfService() {
               ref={(el) => { sectionRefs.current.promotions = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">9. Promotions</h2>
+              <h2 className="mb-3 text-xl font-semibold">10. Promotions</h2>
               <p className="leading-relaxed">
                 Promotional offers and discount codes are subject to additional rules and may
                 be modified or withdrawn at any time. Misuse of promotions may result in
@@ -216,7 +246,7 @@ export default function TermsOfService() {
               ref={(el) => { sectionRefs.current['user-content'] = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">10. User Content</h2>
+              <h2 className="mb-3 text-xl font-semibold">11. User Content</h2>
               <p className="leading-relaxed">
                 You may submit reviews, support requests, chat messages, or other content. You
                 grant Surespot a worldwide, non‑exclusive, royalty‑free license to use,
@@ -231,7 +261,7 @@ export default function TermsOfService() {
               ref={(el) => { sectionRefs.current['prohibited-conduct'] = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">11. Prohibited Conduct</h2>
+              <h2 className="mb-3 text-xl font-semibold">12. Prohibited Conduct</h2>
               <p className="mb-2 leading-relaxed">You agree not to:</p>
               <ul className="list-inside list-disc space-y-1 leading-relaxed">
                 <li>Use the Services for unlawful purposes.</li>
@@ -247,7 +277,7 @@ export default function TermsOfService() {
               ref={(el) => { sectionRefs.current.privacy = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">12. Privacy</h2>
+              <h2 className="mb-3 text-xl font-semibold">13. Privacy</h2>
               <p className="leading-relaxed">
                 Our Privacy Policy explains how we collect, use, and share personal
                 information, including location data, saved addresses, order information,
@@ -261,11 +291,9 @@ export default function TermsOfService() {
               ref={(el) => { sectionRefs.current['third-party-services'] = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">13. Third‑Party Services</h2>
+              <h2 className="mb-3 text-xl font-semibold">14. Third‑Party Services</h2>
               <p className="leading-relaxed">
-                The Services use third‑party tools (for example, payment processors and
-                mapping services). We are not responsible for third‑party services, and their
-                terms apply to your use of those services.
+                The Services use third‑party providers including Paystack (payment processing), Google (address suggestions and sign‑in), and Apple (sign‑in). These providers operate under their own terms of service and privacy policies, which govern your use of their services. We are not responsible for the availability, accuracy, or actions of third‑party services.
               </p>
             </section>
 
@@ -274,7 +302,7 @@ export default function TermsOfService() {
               ref={(el) => { sectionRefs.current['service-changes'] = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">14. Service Changes</h2>
+              <h2 className="mb-3 text-xl font-semibold">15. Service Changes</h2>
               <p className="leading-relaxed">
                 We may modify, suspend, or discontinue parts of the Services at any time,
                 including features, availability, or pricing.
@@ -286,11 +314,9 @@ export default function TermsOfService() {
               ref={(el) => { sectionRefs.current.termination = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">15. Termination</h2>
+              <h2 className="mb-3 text-xl font-semibold">16. Termination</h2>
               <p className="leading-relaxed">
-                We may suspend or terminate your account if you violate these Terms, engage in
-                fraud or abuse, or for other reasons necessary to protect the Services and
-                other users. You may stop using the Services at any time.
+                We may suspend or terminate your account if you violate these Terms, engage in fraud or abuse, or for other reasons necessary to protect the Services and other users. You may close your account at any time via <strong>Profile → Delete Account</strong> in the app. Closing your account does not cancel outstanding orders or affect any payment obligations.
               </p>
             </section>
 
@@ -299,7 +325,7 @@ export default function TermsOfService() {
               ref={(el) => { sectionRefs.current.disclaimers = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">16. Disclaimers</h2>
+              <h2 className="mb-3 text-xl font-semibold">17. Disclaimers</h2>
               <p className="leading-relaxed">
                 The Services are provided “as is” and “as available.” We do not guarantee
                 uninterrupted access, error‑free performance, or that deliveries will meet
@@ -312,7 +338,7 @@ export default function TermsOfService() {
               ref={(el) => { sectionRefs.current['limitation-of-liability'] = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">17. Limitation of Liability</h2>
+              <h2 className="mb-3 text-xl font-semibold">18. Limitation of Liability</h2>
               <p className="leading-relaxed">
                 To the fullest extent permitted by law, Surespot is not liable for indirect,
                 incidental, special, consequential, or punitive damages, or for loss of
@@ -325,7 +351,7 @@ export default function TermsOfService() {
               ref={(el) => { sectionRefs.current.indemnity = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">18. Indemnity</h2>
+              <h2 className="mb-3 text-xl font-semibold">19. Indemnity</h2>
               <p className="leading-relaxed">
                 You agree to defend and indemnify Surespot against claims arising from your
                 misuse of the Services, your content, or your violation of these Terms.
@@ -337,7 +363,7 @@ export default function TermsOfService() {
               ref={(el) => { sectionRefs.current['governing-law'] = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">19. Governing Law</h2>
+              <h2 className="mb-3 text-xl font-semibold">20. Governing Law</h2>
               <p className="leading-relaxed">
                 These Terms are governed by the laws of Nigeria, without regard to
                 conflict‑of‑law rules.
@@ -349,10 +375,10 @@ export default function TermsOfService() {
               ref={(el) => { sectionRefs.current.contact = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">20. Contact Us</h2>
+              <h2 className="mb-3 text-xl font-semibold">21. Contact Us</h2>
               <p className="leading-relaxed">
                 If you have questions, contact support at{' '}
-                <a href="mailto:support@surespot.com" className="text-gold-active underline hover:no-underline">support@surespot.com</a>.
+                <a href="mailto:admin@surespot.ng" className="text-gold-active underline hover:no-underline">admin@surespot.ng</a>.
               </p>
             </section>
           </div>

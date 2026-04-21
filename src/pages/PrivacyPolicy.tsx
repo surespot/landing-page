@@ -11,6 +11,7 @@ const TOC_ITEMS = [
   { id: 'how-we-share', label: 'How We Share Information' },
   { id: 'data-retention', label: 'Data Retention' },
   { id: 'your-rights', label: 'Your Rights and Choices' },
+  { id: 'account-deletion', label: 'Account Deletion' },
   { id: 'security', label: 'Security' },
   { id: 'childrens-privacy', label: "Children's Privacy" },
   { id: 'international-transfers', label: 'International Transfers' },
@@ -78,7 +79,7 @@ export default function PrivacyPolicy() {
               <img src={logo} alt="Surespot" className="h-16 w-auto sm:h-20" />
             </Link>
             <h1 className="mt-6 mb-2 text-3xl font-bold text-text-dark">Privacy Policy</h1>
-            <p className="mb-0 text-sm text-text-dark/70">Last Updated: March 4, 2026</p>
+            <p className="mb-0 text-sm text-text-dark/70">Last Updated: April 21, 2026</p>
           </div>
 
           <div className="space-y-10">
@@ -122,12 +123,15 @@ export default function PrivacyPolicy() {
                 <li><strong>App usage data:</strong> features you use, screens visited, timestamps, and crash logs.</li>
                 <li><strong>Log data:</strong> IP address and basic analytics.</li>
                 <li><strong>Location data:</strong> precise location when you use location‑enabled features (for example, address selection, delivery tracking, or availability of Surespot branches).</li>
+                <li><strong>Push notification tokens:</strong> a device-specific token generated when you enable notifications, used solely to deliver order status and service alerts to your device.</li>
               </ul>
 
               <h3 className="mb-2 mt-6 text-lg font-medium">2.3 Information from Third Parties</h3>
               <ul className="list-inside list-disc space-y-1 leading-relaxed">
-                <li>Payment providers (for example Paystack) provide transaction status and references.</li>
-                <li>Mapping and place services (for example Google Places) return address suggestions and coordinates.</li>
+                <li><strong>Paystack</strong> provides transaction status and payment references when you complete a payment.</li>
+                <li><strong>Google (Places API)</strong> returns address suggestions and coordinates when you search for a delivery address.</li>
+                <li><strong>Google / Apple (OAuth)</strong> provide an authentication token and basic profile details (name, email) when you sign in using Google or Apple.</li>
+                <li><strong>Expo (Push Notifications)</strong> routes push notification tokens between our servers and your device to deliver order updates.</li>
               </ul>
             </section>
 
@@ -201,6 +205,49 @@ export default function PrivacyPolicy() {
                 <li>Successors or acquirers in the event of a merger or business transfer.</li>
                 <li>Other parties only with your consent.</li>
               </ul>
+
+              <h3 className="mb-2 mt-6 text-lg font-medium">6.1 Named Third-Party Processors</h3>
+              <p className="mb-3 leading-relaxed">
+                The following third parties process personal data on our behalf or alongside us:
+              </p>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse text-sm leading-relaxed">
+                  <thead>
+                    <tr className="border-b border-gray-200 text-left text-text-dark/70">
+                      <th className="py-2 pr-4 font-semibold">Provider</th>
+                      <th className="py-2 pr-4 font-semibold">Purpose</th>
+                      <th className="py-2 font-semibold">Data Shared</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    <tr>
+                      <td className="py-2 pr-4 font-medium">Paystack</td>
+                      <td className="py-2 pr-4">Payment processing</td>
+                      <td className="py-2">Order amount, contact details for payment</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 pr-4 font-medium">Google (Places API)</td>
+                      <td className="py-2 pr-4">Address autocomplete</td>
+                      <td className="py-2">Address search queries, approximate location</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 pr-4 font-medium">Google (OAuth)</td>
+                      <td className="py-2 pr-4">Social sign-in</td>
+                      <td className="py-2">Name, email address (if you use Google login)</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 pr-4 font-medium">Apple (Sign in with Apple)</td>
+                      <td className="py-2 pr-4">Social sign-in</td>
+                      <td className="py-2">Name, email address (if you use Apple login)</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 pr-4 font-medium">Expo</td>
+                      <td className="py-2 pr-4">Push notifications</td>
+                      <td className="py-2">Push notification token</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </section>
 
             <section
@@ -235,7 +282,39 @@ export default function PrivacyPolicy() {
               </ul>
               <p className="mt-2 leading-relaxed">
                 To exercise these rights, contact support at{' '}
-                <a href="mailto:support@surespot.com" className="text-gold-active underline hover:no-underline">support@surespot.com</a>.
+                <a href="mailto:admin@surespot.ng" className="text-gold-active underline hover:no-underline">admin@surespot.ng</a>.
+              </p>
+            </section>
+
+            <section
+              id="account-deletion"
+              ref={(el) => { sectionRefs.current['account-deletion'] = el }}
+              className="scroll-mt-24"
+            >
+              <h2 className="mb-3 text-xl font-semibold">9. Account Deletion</h2>
+              <p className="mb-2 leading-relaxed">
+                You can permanently delete your Surespot account at any time directly from the
+                app:
+              </p>
+              <ol className="list-inside list-decimal space-y-1 leading-relaxed">
+                <li>Open the app and go to <strong>Profile</strong>.</li>
+                <li>Scroll to the bottom and tap <strong>Delete Account</strong>.</li>
+                <li>Confirm in the prompt that appears.</li>
+              </ol>
+              <p className="mt-3 leading-relaxed">
+                When your account is deleted:
+              </p>
+              <ul className="list-inside list-disc space-y-1 leading-relaxed">
+                <li>Your profile, saved addresses, preferences, and push notification token are permanently removed from our systems.</li>
+                <li>Any active or pending orders will be completed normally before deletion takes effect.</li>
+                <li>Order records and transaction history may be retained for up to 90 days for accounting, fraud prevention, and dispute resolution purposes.</li>
+                <li>Data we are required to keep by Nigerian law (for example financial or tax records) will be retained for the period required by law and then deleted.</li>
+                <li>Anonymised or aggregated data that cannot identify you is not subject to deletion.</li>
+              </ul>
+              <p className="mt-3 leading-relaxed">
+                Deletions are processed within 30 days of your request. If you need assistance,
+                contact us at{' '}
+                <a href="mailto:admin@surespot.ng" className="text-gold-active underline hover:no-underline">admin@surespot.ng</a>.
               </p>
             </section>
 
@@ -244,7 +323,7 @@ export default function PrivacyPolicy() {
               ref={(el) => { sectionRefs.current.security = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">9. Security</h2>
+              <h2 className="mb-3 text-xl font-semibold">10. Security</h2>
               <p className="leading-relaxed">
                 We use administrative, technical, and physical safeguards to protect your
                 data. However, no system is completely secure, and we cannot guarantee
@@ -257,7 +336,7 @@ export default function PrivacyPolicy() {
               ref={(el) => { sectionRefs.current['childrens-privacy'] = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">10. Children’s Privacy</h2>
+              <h2 className="mb-3 text-xl font-semibold">11. Children’s Privacy</h2>
               <p className="leading-relaxed">
                 The Services are not intended for individuals under 18. We do not knowingly
                 collect personal information from children. If you believe a child has
@@ -270,7 +349,7 @@ export default function PrivacyPolicy() {
               ref={(el) => { sectionRefs.current['international-transfers'] = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">11. International Transfers</h2>
+              <h2 className="mb-3 text-xl font-semibold">12. International Transfers</h2>
               <p className="leading-relaxed">
                 Your information may be processed or stored in Nigeria or other countries
                 where we or our service providers operate. We take reasonable steps to protect
@@ -283,7 +362,7 @@ export default function PrivacyPolicy() {
               ref={(el) => { sectionRefs.current.changes = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">12. Changes to This Privacy Policy</h2>
+              <h2 className="mb-3 text-xl font-semibold">13. Changes to This Privacy Policy</h2>
               <p className="leading-relaxed">
                 We may update this Privacy Policy from time to time. We will post the updated
                 version and revise the “Last Updated” date. Continued use of the Services
@@ -296,10 +375,10 @@ export default function PrivacyPolicy() {
               ref={(el) => { sectionRefs.current.contact = el }}
               className="scroll-mt-24"
             >
-              <h2 className="mb-3 text-xl font-semibold">13. Contact Us</h2>
+              <h2 className="mb-3 text-xl font-semibold">14. Contact Us</h2>
               <p className="leading-relaxed">
                 For questions or privacy requests, contact us at{' '}
-                <a href="mailto:support@surespot.com" className="text-gold-active underline hover:no-underline">support@surespot.com</a>.
+                <a href="mailto:admin@surespot.ng" className="text-gold-active underline hover:no-underline">admin@surespot.ng</a>.
               </p>
             </section>
           </div>
