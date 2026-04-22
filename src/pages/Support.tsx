@@ -35,7 +35,7 @@ export default function Support() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-white text-text-dark">
+    <div className="doc-page min-h-screen bg-white text-text-dark">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-8 lg:flex-row lg:gap-12 lg:px-8">
         <aside className="hidden shrink-0 border-r border-gray-300 pl-0 pr-6 lg:block lg:w-56">
           <nav className="sticky top-8 text-center">
@@ -130,7 +130,7 @@ export default function Support() {
               <ol className="list-inside list-decimal space-y-1 leading-relaxed">
                 <li>Open the Surespot app.</li>
                 <li>
-                  Go to <strong>Profile</strong> → <strong>Contact Support</strong>.
+                  Go to <strong>Profile</strong> then <strong>Contact Support</strong>.
                 </li>
                 <li>Describe your issue and send your message. You can attach photos if needed.</li>
               </ol>
@@ -148,7 +148,7 @@ export default function Support() {
               </p>
               <ol className="list-inside list-decimal space-y-1 leading-relaxed">
                 <li>
-                  Go to <strong>Profile</strong> → <strong>Contact Support</strong> →{' '}
+                  Go to <strong>Profile</strong>, then <strong>Contact Support</strong>, then{' '}
                   <strong>Order Disputes</strong>.
                 </li>
                 <li>Select the order and describe what happened.</li>
@@ -203,13 +203,13 @@ export default function Support() {
                   <Link to="/privacy" className="text-gold-active underline hover:no-underline">
                     Privacy Policy
                   </Link>{' '}
-                  — how we handle your data.
+                  : how we handle your data.
                 </li>
                 <li>
                   <Link to="/terms" className="text-gold-active underline hover:no-underline">
                     Terms of Service
                   </Link>{' '}
-                  — orders, refunds, and use of the service.
+                  : orders, refunds, and use of the service.
                 </li>
               </ul>
             </section>

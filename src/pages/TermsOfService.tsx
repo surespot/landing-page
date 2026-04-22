@@ -49,7 +49,7 @@ export default function TermsOfService() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-white text-text-dark">
+    <div className="doc-page min-h-screen bg-white text-text-dark">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-8 lg:flex-row lg:gap-12 lg:px-8">
         {/* Sidebar - Table of Contents */}
         <aside className="hidden shrink-0 border-r border-gray-300 pl-0 pr-6 lg:block lg:w-56">

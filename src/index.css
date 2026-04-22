@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @config '../tailwind.config.js';
 
+/* Cerebri Sans Pro kept as local fallback */
 @font-face {
   font-family: 'Cerebri Sans Pro';
   src: url('./assets/Cerebri-Sans-Pro/CerebriSansPro-Regular.ttf') format('truetype');
@@ -8,7 +9,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: 'Cerebri Sans Pro';
   src: url('./assets/Cerebri-Sans-Pro/CerebriSansPro-Medium.ttf') format('truetype');
@@ -16,7 +16,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: 'Cerebri Sans Pro';
   src: url('./assets/Cerebri-Sans-Pro/CerebriSansPro-SemiBold.ttf') format('truetype');
@@ -24,7 +23,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: 'Cerebri Sans Pro';
   src: url('./assets/Cerebri-Sans-Pro/CerebriSansPro-Bold.ttf') format('truetype');
@@ -38,24 +36,66 @@ html {
 }
 
 :root {
-  font-family: 'Cerebri Sans Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  /* Brand golds */
-  --color-gold-active: #ffd700;
-  --color-gold-passive: #e6bf00;
+  /* ===== New design tokens ===== */
+  /* Browns */
+  --brown-900: #1a130d;
+  --brown-800: #261b13;
+  --brown-700: #3a2a1f;
+  --brown-600: #4a3426;
+  --brown-500: #6b4a33;
+  --brown-300: #a8927d;
+  --brown-100: #e8dfd3;
+
+  /* Cream */
+  --cream-100: #fffdf5;
+  --cream-200: #fef8e6;
+  --cream-300: #fbefd0;
+  --cream-400: #f4e4b8;
+  --cream-500: #eacf87;
+
+  /* Gold */
+  --gold-100: #fff8d1;
+  --gold-300: #ffe066;
+  --gold-400: #ffd43b;
+  --gold-500: #f1c232;
+  --gold-600: #d4a017;
+  --gold-700: #a87b08;
+
+  /* Accents */
+  --red-500: #ef5543;
+  --green-500: #3cb371;
 
   /* Text */
-  --color-text-dark: #2c2c2c;
-  --color-text-light: #ffffff;
+  --text-light: #fffbeb;
+  --text-dark: #241810;
+  --text-muted-dark: rgba(36, 24, 16, 0.68);
+  --text-muted-light: rgba(255, 251, 235, 0.7);
 
-  /* Arrow states */
+  /* Radii */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-xl: 32px;
+  --r-full: 999px;
+
+  /* Fonts */
+  --font-display: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Manrope', 'Cerebri Sans Pro', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  font-family: var(--font-sans);
+
+  /* ===== Tailwind token aliases (used by supporting pages) ===== */
+  --color-gold-active: var(--gold-500);
+  --color-gold-passive: var(--gold-600);
+  --color-text-dark: var(--text-dark);
+  --color-text-light: var(--text-light);
   --color-arrow-gold-passive: #ffe88a;
-  --color-arrow-gold-active: #ffdd55;
+  --color-arrow-gold-active: var(--gold-400);
   --color-arrow-grey-passive: #757575;
-  --color-arrow-grey-active: #2c2c2c;
-
-  /* Backgrounds */
-  --color-bg-cream: #fffdf7;
-  --color-bg-brown: #3e2723;
+  --color-arrow-grey-active: var(--text-dark);
+  --color-bg-cream: var(--cream-100);
+  --color-bg-brown: var(--brown-900);
 }
 
 *,
@@ -68,9 +108,48 @@ body {
   margin: 0;
   min-width: 20rem;
   min-height: 100vh;
-  background-color: var(--color-bg-cream);
+  background-color: var(--cream-100);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: 0;
+  background: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 #root {
   min-height: 100vh;
+}
+
+/* Supporting pages (Support, Privacy, Terms) */
+.doc-page h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.doc-page h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.doc-page a.text-gold-active {
+  color: var(--gold-600);
+}
+.doc-page a.text-gold-active:hover {
+  color: var(--gold-500);
 }
