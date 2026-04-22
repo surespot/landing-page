@@ -53,7 +53,7 @@ const MENU_ITEMS_FALLBACK: MenuItem[] = [
 ]
 
 const STEPS = [
-  { icon: 'i-search', label: 'Step 01', title: 'Pick what you crave',   text: 'Browse our menu and filter by cuisine, price, or what\'s trending in your area.', darkTitle: true },
+  { icon: 'i-search', label: 'Step 01', title: 'Pick what you want',   text: 'Browse our menu and filter by cuisine, price, or what\'s trending in your area.', darkTitle: true },
   { icon: 'i-chef',   label: 'Step 02', title: 'We get the kitchen cooking', text: 'Your order goes straight to one of our kitchens close to you. Freshly prepared, no shortcuts, we promise.', darkTitle: true },
   { icon: 'i-bike',   label: 'Step 03', title: 'Rider on the way',           text: 'A nearby Surespot Eatery rider picks it up hot. Get status updates as your order moves, and message the rider directly if anything comes up.' },
   { icon: 'i-door',   label: 'Step 04', title: 'Knock knock, chop time',     text: 'Delivered to your door, still steaming. Tip the rider, rate the meal, plan the next round.', darkTitle: true },
