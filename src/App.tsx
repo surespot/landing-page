@@ -132,7 +132,6 @@ function App() {
 
   const [menuItems,        setMenuItems]        = useState<MenuItem[]>(() => API_BASE ? [] : [...MENU_ITEMS_FALLBACK])
   const [isLoadingMenu,    setIsLoadingMenu]    = useState(() => Boolean(API_BASE))
-  const [usingFallbackMenu,setUsingFallbackMenu]= useState(() => !API_BASE)
   const [noRemoteMenuItems,setNoRemoteMenuItems]= useState(false)
 
   // ── Nav scroll state ───────────────────────────────────────────────────────
@@ -183,7 +182,6 @@ function App() {
     const apiBase = API_BASE
     if (!apiBase) {
       setMenuItems([...MENU_ITEMS_FALLBACK])
-      setUsingFallbackMenu(true)
       setNoRemoteMenuItems(false)
       setIsLoadingMenu(false)
       return
@@ -207,7 +205,6 @@ function App() {
           if (cancelled) return
           setMenuItems([])
           setNoRemoteMenuItems(true)
-          setUsingFallbackMenu(false)
           return
         }
 
@@ -259,11 +256,9 @@ function App() {
         if (cancelled) return
         setMenuItems(mapped)
         setNoRemoteMenuItems(false)
-        setUsingFallbackMenu(false)
       } catch {
         if (cancelled) return
         setMenuItems([...MENU_ITEMS_FALLBACK])
-        setUsingFallbackMenu(true)
         setNoRemoteMenuItems(false)
       } finally {
         if (!cancelled) setIsLoadingMenu(false)
@@ -461,10 +456,6 @@ function App() {
               </button>
             </div>
           </div>
-
-          {usingFallbackMenu && !isLoadingMenu && !noRemoteMenuItems && (
-            console.log('Showing sample menu, live menu unavailable.')
-          )}
 
           {noRemoteMenuItems ? (
             <p style={{ textAlign: 'center', color: 'var(--text-muted-dark)', padding: '40px 0' }}>
