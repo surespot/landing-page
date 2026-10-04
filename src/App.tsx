@@ -103,8 +103,27 @@ const API_BASE = ((import.meta.env.VITE_API_BASE_URL as string | undefined) || '
 
 const APP_STORE_URL  = (import.meta.env.VITE_APP_STORE_URL  as string | undefined) || '#app'
 const PLAY_STORE_URL = (import.meta.env.VITE_PLAY_STORE_URL as string | undefined) || '#app'
-const RIDER_APPLY_URL =
-  'mailto:admin@surespot.ng?subject=Rider%20application&body=Name%3A%0APhone%3A%0AArea%20in%20Lagos%3A%0AType%20of%20bike%3A'
+const RIDER_APPLY_BODY = `Hello Surespot,
+
+I would like to become a rider.
+
+Full name:
+Phone number:
+Email:
+Area in Lagos:
+Vehicle (motorcycle / bicycle):
+
+I am 18 or older, and I understand I need to visit a Surespot store to complete my application, with:
+- Valid government ID (national ID, driver's licence or passport)
+- Proof of address (utility bill, bank statement or official letter)
+- A recent passport-style photo
+- Bank account details for payouts (account number and bank name)
+- Vehicle documents (if using a motorcycle)
+- Emergency contact name and phone number
+
+Please let me know which store to visit and when.`
+
+const RIDER_APPLY_URL = `mailto:admin@surespot.ng?subject=${encodeURIComponent('Rider application')}&body=${encodeURIComponent(RIDER_APPLY_BODY)}`
 
 // ─── Icon helper ──────────────────────────────────────────────────────────────
 
