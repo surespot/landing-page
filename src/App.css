@@ -928,7 +928,7 @@ section { position: relative; }
   gap: 28px;
   align-items: start;
   position: relative;
-  overflow: visible;
+  overflow: hidden; /* clips the ::before glow so it can't widen the page on mobile */
 }
 @media (min-width: 900px) { .newsletter { grid-template-columns: 1.1fr 1fr; padding: 72px 64px; } }
 
