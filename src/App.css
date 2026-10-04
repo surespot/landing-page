@@ -318,24 +318,6 @@ section { position: relative; }
   100% { transform: translate(var(--dx, 18px), var(--dy, -22px)) rotate(var(--r2, 8deg)); }
 }
 
-.hero-scroll-hint {
-  position: absolute;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(255,251,235,0.5);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  z-index: 3;
-}
-.hero-scroll-hint .line { width: 1px; height: 40px; background: linear-gradient(to bottom, transparent, rgba(255,251,235,0.5)); }
-
 /* ========== Marquee ========== */
 .marquee {
   background: var(--gold-500);

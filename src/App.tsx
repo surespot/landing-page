@@ -336,7 +336,7 @@ function App() {
       <header className={`nav ${scrolled ? 'scrolled' : ''}`}>
         <div className="wrap nav-inner">
           <a href="#home" aria-label="Surespot home" style={{ display: 'flex', alignItems: 'center' }}>
-            <img src={logo} alt="Surespot" style={{ height: 48, width: 'auto' }} />
+            <img src={logo} alt="Surespot Eatery" style={{ height: 48, width: 'auto' }} />
           </a>
           <nav className="nav-links" aria-label="Primary">
             {NAV_SECTIONS.map(s => (
@@ -412,10 +412,6 @@ function App() {
             <div><span className="num">28 min</span>average delivery</div>
             <div><span className="num">{LAGOS_AREAS.length}</span>Areas covered</div>
           </div>
-        </div>
-        <div className="hero-scroll-hint">
-          <span>Scroll</span>
-          <span className="line" />
         </div>
       </section>
 
@@ -922,7 +918,7 @@ function App() {
         <div className="wrap">
           <div className="foot-grid">
             <div className="foot foot-brand">
-              <img src={logo} alt="Surespot" style={{ height: 64, width: 'auto', objectFit: 'contain' }} />
+              <img src={logo} alt="Surespot Eatery" style={{ height: 64, width: 'auto', objectFit: 'contain' }} />
               <p>Surespot Eatery brings your favourite Lagos meals fast and sure, from our own kitchens to your doorstep, hot and on time.</p>
               <div className="badges">
                 <a href={APP_STORE_URL} rel="noopener" className="store-badge-img">

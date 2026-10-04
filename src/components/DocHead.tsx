@@ -3,20 +3,20 @@ import { useLocation } from 'react-router-dom'
 
 const ROUTE_META: Record<string, { title: string; description: string }> = {
   '/': {
-    title: 'Surespot Food Delivery | Lagos',
+    title: 'Surespot Eatery | Food Delivery in Lagos',
     description:
-      'Order your favorite Surespot meals in Lagos. Fast delivery and pickup, 9AM–10PM daily. Get the app for a simple, reliable food experience.',
+      'Surespot Eatery delivers fresh Nigerian meals in Iba, Egbeda, Isheri, Igando and Iyana-Isashi, Lagos. Order on the app. Open 9AM–10PM daily.',
   },
   '/terms': {
-    title: 'Terms of Service | Surespot',
+    title: 'Terms of Service | Surespot Eatery',
     description: 'Surespot Terms of Service (Customers). Last updated March 4, 2026.',
   },
   '/privacy': {
-    title: 'Privacy Policy | Surespot',
+    title: 'Privacy Policy | Surespot Eatery',
     description: 'Surespot Privacy Policy (Customers). How we collect, use, and protect your information.',
   },
   '/support': {
-    title: 'Support | Surespot',
+    title: 'Support | Surespot Eatery',
     description:
       'Contact Surespot support by email or phone, get help in the app, and learn how to report order issues.',
   },
