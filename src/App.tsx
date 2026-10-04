@@ -64,12 +64,11 @@ const STEPS = [
 ]
 
 const LAGOS_AREAS = [
-  { id: 'iba',    name: 'Iba / Ojo',         fee: '₦0 – ₦400',     time: '20–30 min', kitchens: 14, x: 18, y: 60, featured: true, note: 'HQ neighbourhood. Free delivery under 2 km.' },
-  { id: 'festac', name: 'Festac & Satellite', fee: '₦400 – ₦700',   time: '25–35 min', kitchens: 22, x: 32, y: 56, note: 'Popular with lunch orders and party jollof runs.' },
-  { id: 'ikeja',  name: 'Ikeja & Alausa',     fee: '₦600 – ₦900',   time: '30–40 min', kitchens: 38, x: 52, y: 30, note: 'Office crowd, breakfast rush from 8–10 am.' },
-  { id: 'yaba',   name: 'Yaba & Surulere',    fee: '₦500 – ₦800',   time: '25–35 min', kitchens: 29, x: 62, y: 46, note: 'Students and friends, late-night suya runs.' },
-  { id: 'lekki',  name: 'Lekki Phase 1',      fee: '₦700 – ₦1,100', time: '30–45 min', kitchens: 41, x: 82, y: 58, note: 'Wide selection, weekend enjoyment favourite.' },
-  { id: 'vi',     name: 'Victoria Island',    fee: '₦700 – ₦1,000', time: '30–40 min', kitchens: 26, x: 72, y: 66, note: 'Business lunch runs and hotel orders.' },
+  { id: 'iba',     name: 'Iba',           fee: '₦600 – ₦900',     time: '15–25 min', kitchens: 4, x: 18, y: 62, featured: true, note: 'Where it all started. Our home neighbourhood and first kitchen.' },
+  { id: 'isashi',  name: 'Iyana-Isashi',  fee: '₦900 – ₦1,300',   time: '25–35 min', kitchens: 3, x: 34, y: 70, note: 'Delivering along the Iyana-Isashi corridor. Confirm your street in the app.' },
+  { id: 'igando',  name: 'Igando',        fee: '₦1,200 – ₦1,600', time: '30–40 min', kitchens: 3, x: 30, y: 40, note: 'Delivering to Igando and nearby streets. Confirm your address in the app.' },
+  { id: 'egbeda',  name: 'Egbeda',        fee: '₦1,900 – ₦2,300', time: '40–55 min', kitchens: 2, x: 52, y: 28, note: 'Delivering to Egbeda and surrounding areas. Confirm your address in the app.' },
+  { id: 'isheri',  name: 'Isheri',        fee: '₦1,500 – ₦1,900', time: '35–45 min', kitchens: 2, x: 66, y: 52, note: 'Delivering to Isheri and the Lasu Isheri Road axis. Confirm your address in the app.' },
 ]
 
 const FEATURES = [
@@ -81,7 +80,7 @@ const FEATURES = [
 ]
 
 const FAQ_ITEMS = [
-  { q: 'Where in Lagos do you deliver?',      a: 'We currently cover Iba/Ojo, Festac, Satellite Town, Ikeja, Alausa, Yaba, Surulere, Lekki Phase 1 and Victoria Island. New areas are added monthly, so tap the map above to check coverage, or drop your address in the app for the latest.' },
+  { q: 'Where in Lagos do you deliver?',      a: 'We currently deliver to Iba, Egbeda, Isheri, Igando and Iyana-Isashi. We are growing, so tap the map above to check coverage, or enter your address in the app to confirm we reach you.' },
   { q: 'How long does delivery take?',         a: "Most orders arrive in 25–35 minutes, depending on your area and kitchen prep time. You'll see a live ETA once a rider accepts your order, and we update it if traffic holds us up." },
   { q: 'What payment methods do you accept?',  a: "Card, bank transfer, USSD, and cash on delivery. All in-app payments are secured by Paystack, so your money is safe." },
   { q: 'My food came late or wrong. What now?',a: "Tap Help on the order in the app or email admin@surespot.ng within 24 hours. We'll refund, resend, or credit you, whichever sorts it out fastest." },
@@ -392,7 +391,7 @@ function App() {
           <div className="hero-stats">
             <div><span className="num">40k+</span>meals delivered</div>
             <div><span className="num">28 min</span>average delivery</div>
-            <div><span className="num">9</span>Lagos areas covered</div>
+            <div><span className="num">{LAGOS_AREAS.length}</span>Areas covered</div>
           </div>
         </div>
         <div className="hero-scroll-hint">
