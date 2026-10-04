@@ -1,0 +1,17 @@
+# Production deployment - runs the pre-built image
+# Usage: APP_IMAGE=ghcr.io/owner/repo:main docker compose -f compose-prod.yml up -d
+
+services:
+  landing:
+    image: ${APP_IMAGE}
+    container_name: surespot-landing-prod
+    restart: unless-stopped
+    ports:
+      # host nginx (surespot.ng) proxies to this; not exposed publicly
+      - "127.0.0.1:5002:80"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

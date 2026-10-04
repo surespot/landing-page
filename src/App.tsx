@@ -93,7 +93,13 @@ const DRIFT_ITEMS = [
   { emblem: 'f-plantain', bg: '#3a2a1f', size: 54,  top: '78%', left: '38%', dx: -8,  dy: -10, r1: -12, r2: 4,   dur: '13s' },
 ]
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL as string | undefined
+// Same-origin by default: nginx on the host proxies /api/* to the backend.
+const API_BASE = ((import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '/api').replace(/\/$/, '')
+
+const APP_STORE_URL  = (import.meta.env.VITE_APP_STORE_URL  as string | undefined) || '#app'
+const PLAY_STORE_URL = (import.meta.env.VITE_PLAY_STORE_URL as string | undefined) || '#app'
+const RIDER_APPLY_URL =
+  'mailto:admin@surespot.ng?subject=Rider%20application&body=Name%3A%0APhone%3A%0AArea%20in%20Lagos%3A%0AType%20of%20bike%3A'
 
 // ─── Icon helper ──────────────────────────────────────────────────────────────
 
@@ -125,6 +131,8 @@ function App() {
   const [newsChannel,    setNewsChannel]    = useState<'email' | 'whatsapp'>('email')
   const [newsValue,      setNewsValue]      = useState('')
   const [newsSent,       setNewsSent]       = useState(false)
+  const [newsBusy,       setNewsBusy]       = useState(false)
+  const [newsError,      setNewsError]      = useState('')
 
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const [canScrollLeft,  setCanScrollLeft]  = useState(false)
@@ -191,11 +199,7 @@ function App() {
 
     const loadPopular = async () => {
       try {
-        const url = new URL('/food-items/popular', apiBase)
-        url.searchParams.set('page', '1')
-        url.searchParams.set('limit', '8')
-
-        const res = await fetch(url.toString())
+        const res = await fetch(`${apiBase}/food-items/popular?page=1&limit=8`)
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
 
         const json = await res.json()
@@ -268,6 +272,35 @@ function App() {
     loadPopular()
     return () => { cancelled = true }
   }, [])
+
+  const subscribe = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (newsBusy || newsSent) return
+    setNewsBusy(true)
+    setNewsError('')
+    try {
+      const value = newsValue.trim()
+      const res = await fetch(`${API_BASE}/newsletter/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+          newsChannel === 'email'
+            ? { channel: 'email', email: value }
+            : { channel: 'whatsapp', phone: value.replace(/[\s-]/g, '') },
+        ),
+      })
+      if (res.status === 429) throw new Error('Too many attempts. Please try again in a minute.')
+      if (res.status === 400) {
+        throw new Error(newsChannel === 'email' ? 'Please enter a valid email address.' : 'Please enter a valid Nigerian phone number.')
+      }
+      if (!res.ok) throw new Error('Something went wrong. Please try again.')
+      setNewsSent(true)
+    } catch (err) {
+      setNewsError(err instanceof Error && err.message !== 'Failed to fetch' ? err.message : 'Something went wrong. Please try again.')
+    } finally {
+      setNewsBusy(false)
+    }
+  }
 
   const activeArea = LAGOS_AREAS.find(a => a.id === coverageActive) ?? LAGOS_AREAS[0]
 
@@ -533,7 +566,7 @@ function App() {
                 ))}
               </ul>
               <div style={{ display: 'flex', gap: 10, marginTop: 8, flexWrap: 'wrap' }}>
-                <a className="btn btn-gold" href="#">Start rider application <Icon id="i-arrow-right" size={14} /></a>
+                <a className="btn btn-gold" href={RIDER_APPLY_URL}>Start rider application <Icon id="i-arrow-right" size={14} /></a>
               </div>
             </div>
             <div className="rider-visual" aria-hidden="true">
@@ -624,7 +657,7 @@ function App() {
                   ))}
                 </ul>
               </div>
-              <a className="btn btn-gold" href="#" style={{ justifyContent: 'center', marginTop: 6 }}>Check your exact address</a>
+              <a className="btn btn-gold" href="#app" style={{ justifyContent: 'center', marginTop: 6 }}>Check your exact address</a>
             </div>
           </div>
         </div>
@@ -649,10 +682,10 @@ function App() {
                 </div>
               ))}
               <div style={{ display: 'flex', gap: 10, marginTop: 16, justifyContent: 'center' }}>
-                <a className="btn btn-dark" href="#">
+                <a className="btn btn-dark" href={APP_STORE_URL} rel="noopener">
                   App Store
                 </a>
-                <a className="btn btn-dark" href="#">
+                <a className="btn btn-dark" href={PLAY_STORE_URL} rel="noopener">
                   Google Play
                 </a>
               </div>
@@ -790,7 +823,7 @@ function App() {
                 Get weekly Lagos food tips, new kitchen alerts, and first dibs on limited combos by email or WhatsApp. No spam, we promise.
               </p>
             </div>
-            <form className="newsletter-form" onSubmit={e => { e.preventDefault(); setNewsSent(true) }}>
+            <form className="newsletter-form" onSubmit={subscribe}>
               <div className="channel-switch">
                 <button type="button" className={`channel-btn ${newsChannel === 'email'    ? 'active' : ''}`} onClick={() => setNewsChannel('email')}>Email</button>
                 <button type="button" className={`channel-btn ${newsChannel === 'whatsapp' ? 'active' : ''}`} onClick={() => setNewsChannel('whatsapp')}>WhatsApp</button>
@@ -800,10 +833,11 @@ function App() {
                   type={newsChannel === 'email' ? 'email' : 'tel'}
                   placeholder={newsChannel === 'email' ? 'you@example.com' : '+234 816 000 0000'}
                   value={newsValue}
-                  onChange={e => setNewsValue(e.target.value)}
+                  onChange={e => { setNewsValue(e.target.value); setNewsError('') }}
+                  required
                   aria-label={newsChannel === 'email' ? 'Email address' : 'Phone number'}
                 />
-                <button className="btn btn-dark newsletter-submit-btn" type="submit">
+                <button className="btn btn-dark newsletter-submit-btn" type="submit" disabled={newsBusy || newsSent}>
                   {newsSent ? (
                     <>
                       <span className="mobile-only">✓</span>
@@ -820,6 +854,7 @@ function App() {
               <div className="newsletter-note">
                 <Icon id="i-bell" size={12} /> Unsubscribe anytime.
               </div>
+              {newsError && <div className="newsletter-note" role="alert" style={{ color: '#ef5543' }}>{newsError}</div>}
             </form>
           </div>
         </div>
@@ -865,10 +900,10 @@ function App() {
               <img src={logo} alt="Surespot" style={{ height: 64, width: 'auto', objectFit: 'contain' }} />
               <p>Surespot Eatery brings your favourite Lagos meals fast and sure, from our own kitchens to your doorstep, hot and on time.</p>
               <div className="badges">
-                <a href="#" className="store-badge-img">
+                <a href={APP_STORE_URL} rel="noopener" className="store-badge-img">
                   <img src={appStoreBadge} alt="Download on App Store" style={{ height: 40, width: 'auto', objectFit: 'contain' }} />
                 </a>
-                <a href="#" className="store-badge-img">
+                <a href={PLAY_STORE_URL} rel="noopener" className="store-badge-img">
                   <img src={googlePlayBadge} alt="Get it on Google Play" style={{ height: 40, width: 'auto', objectFit: 'contain' }} />
                 </a>
               </div>
