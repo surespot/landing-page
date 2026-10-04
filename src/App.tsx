@@ -94,7 +94,7 @@ const DRIFT_ITEMS = [
 ]
 
 // Same-origin by default: nginx on the host proxies /api/* to the backend.
-const API_BASE = ((import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '/api').replace(/\/$/, '')
+const API_BASE = ((import.meta.env.VITE_API_BASE_URL as string | undefined) || '/api').replace(/\/$/, '')
 
 const APP_STORE_URL  = (import.meta.env.VITE_APP_STORE_URL  as string | undefined) || '#app'
 const PLAY_STORE_URL = (import.meta.env.VITE_PLAY_STORE_URL as string | undefined) || '#app'
