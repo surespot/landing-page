@@ -11,7 +11,7 @@ import friedRiceImg from './assets/fried rice.webp'
 type MenuItem = {
   name: string
   price: string
-  rating: string
+  rating?: string
   time: string
   tag?: string
   blurb?: string
@@ -20,6 +20,10 @@ type MenuItem = {
 
 type FoodItemApi = {
   name?: string
+  description?: string
+  category?: string
+  tags?: string[]
+  ratingCount?: number
   price?: number
   formattedPrice?: string
   currency?: string
@@ -94,6 +98,8 @@ const DRIFT_ITEMS = [
 ]
 
 // Same-origin by default: nginx on the host proxies /api/* to the backend.
+const toTag = (v?: string) => (v ? v.charAt(0).toUpperCase() + v.slice(1).toLowerCase() : undefined)
+
 const API_BASE = ((import.meta.env.VITE_API_BASE_URL as string | undefined) || '/api').replace(/\/$/, '')
 
 const APP_STORE_URL  = (import.meta.env.VITE_APP_STORE_URL  as string | undefined) || '#app'
@@ -212,7 +218,7 @@ function App() {
           return
         }
 
-        const mapped: MenuItem[] = (items as FoodItemApi[]).map((item, i) => {
+        const mapped: MenuItem[] = (items as FoodItemApi[]).map((item) => {
           const rawPrice  = typeof item.price === 'number' ? item.price : undefined
           const currency  = typeof item.currency === 'string' ? item.currency : 'NGN'
 
@@ -244,15 +250,14 @@ function App() {
               ? item.imageUrls.find(u => typeof u === 'string' && u.trim() !== '')?.trim()
               : undefined
 
-          const fallback = MENU_ITEMS_FALLBACK[i % MENU_ITEMS_FALLBACK.length]
 
           return {
             name:   item.name ?? 'Meal',
             price:  formattedPrice,
-            rating: avgRating != null ? avgRating.toFixed(1) : '4.8',
+            ...(avgRating != null && avgRating > 0 && (item.ratingCount ?? 0) > 0 ? { rating: avgRating.toFixed(1) } : {}),
             time:   eta,
-            tag:    fallback.tag,
-            blurb:  fallback.blurb,
+            tag:    toTag(item.tags?.[0] ?? item.category),
+            blurb:  typeof item.description === 'string' && item.description.trim().length > 20 ? item.description.trim() : undefined,
             ...(imageUrl ? { imageUrl } : {}),
           }
         })
@@ -523,9 +528,11 @@ function App() {
                     }
                   >
                     {item.tag && <span className="tag">{item.tag}</span>}
-                    <span className="rating">
-                      <Icon id="i-star" size={11} className="star" /> {item.rating}
-                    </span>
+                    {item.rating && (
+                      <span className="rating">
+                        <Icon id="i-star" size={11} className="star" /> {item.rating}
+                      </span>
+                    )}
                   </div>
                   <div className="menu-body">
                     <div className="menu-top">
